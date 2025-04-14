@@ -14,7 +14,7 @@ var laser_scene = preload("res://scenes/laser/laser.tscn")
 
 var shoot_cd = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_pressed("shoot"):
 		if not shoot_cd:
 			shoot_cd = true

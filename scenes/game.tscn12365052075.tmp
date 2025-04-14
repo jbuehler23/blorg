@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://btuoglk8nccmo"]
+
+[ext_resource type="PackedScene" uid="uid://df0x0v6cnu5vv" path="res://scenes/ships/player.tscn" id="1_5235u"]
+[ext_resource type="Script" uid="uid://c34hl32kw8c0g" path="res://scripts/game.gd" id="1_uqqga"]
+[ext_resource type="PackedScene" uid="uid://cimgh0dgo5fje" path="res://scenes/asteroids/asteroid.tscn" id="3_4dial"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_uqqga")
+
+[node name="Ships" type="Node" parent="."]
+
+[node name="Player" parent="Ships" instance=ExtResource("1_5235u")]
+position = Vector2(640, 360)
+scale = Vector2(0.6, 0.6)
+
+[node name="Lasers" type="Node" parent="."]
+
+[node name="Asteroid" parent="." instance=ExtResource("3_4dial")]
+position = Vector2(496, 280)
+size = 0
+shape = 0

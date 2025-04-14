@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://btuoglk8nccmo"]
+
+[ext_resource type="PackedScene" uid="uid://df0x0v6cnu5vv" path="res://scenes/ships/triangle.tscn" id="1_5235u"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_uqqga"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_uqqga")
+
+[node name="Ships" type="Node" parent="."]
+
+[node name="Triangle" parent="Ships" instance=ExtResource("1_5235u")]
+position = Vector2(640, 360)
+
+[node name="Lasers" type="Node" parent="."]

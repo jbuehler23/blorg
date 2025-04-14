@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://bdukvuiyocc6g"]
+
+[node name="Square" type="Polygon2D"]
+polygon = PackedVector2Array(0, 64, 128, 64, 128, -64, 0, -64)

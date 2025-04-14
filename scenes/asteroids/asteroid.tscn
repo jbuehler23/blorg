@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cimgh0dgo5fje"]
+
+[ext_resource type="Script" uid="uid://2qnue1rnw3gu" path="res://scripts/asteroids/asteroid.gd" id="1_n3rl4"]
+
+[node name="Asteroid" type="Area2D"]
+collision_layer = 4
+collision_mask = 11
+script = ExtResource("1_n3rl4")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 8, 64, 8, 64, 72, 0, 72)

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://deehfn85vb7sp"]
+
+[ext_resource type="Script" uid="uid://cnfo7gcselnas" path="res://scenes/shapes/circle.gd" id="1_ivgyx"]
+
+[node name="Circle" type="Polygon2D"]
+script = ExtResource("1_ivgyx")
