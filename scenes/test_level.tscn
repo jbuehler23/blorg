@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://btuoglk8nccmo"]
-
-[ext_resource type="PackedScene" uid="uid://df0x0v6cnu5vv" path="res://scenes/player/player.tscn" id="1_wmaff"]
-
-[node name="TestLevel" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource("1_wmaff")]
-position = Vector2(640, 360)
-scale = Vector2(0.5, 0.5)
