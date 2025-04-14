@@ -6,13 +6,26 @@
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_tn02d")
+ship_indicator_scale = 2
 
 [node name="Ship" type="Polygon2D" parent="."]
-position = Vector2(-32, -40)
-polygon = PackedVector2Array(0, 64, 64, 64, 32, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -40, 32, 24, -32, 24)
 
+[node name="GunIndicator" type="Line2D" parent="."]
+points = PackedVector2Array(0, -56, 0, -40)
+width = 5.0
+
 [node name="Muzzle" type="Node2D" parent="."]
-position = Vector2(0, -48)
+position = Vector2(0, -56)
+
+[node name="RightIndicator" type="Node2D" parent="."]
+position = Vector2(40, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="RightIndicator"]
+
+[node name="LeftIndicator" type="Node2D" parent="."]
+position = Vector2(-40, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="LeftIndicator"]

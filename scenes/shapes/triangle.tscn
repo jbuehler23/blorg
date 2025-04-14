@@ -1,4 +1,0 @@
-[gd_scene format=3 uid="uid://hr0m7rr8vyju"]
-
-[node name="Triangle" type="Polygon2D"]
-polygon = PackedVector2Array(0, 64, 128, 64, 64, -64)

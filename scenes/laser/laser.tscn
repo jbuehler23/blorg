@@ -1,9 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bov58kwrig3yg"]
+[gd_scene load_steps=2 format=3 uid="uid://bov58kwrig3yg"]
 
 [ext_resource type="Script" uid="uid://d3olhyl6rbc6g" path="res://scripts/laser.gd" id="1_3a3ko"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtjh1"]
-size = Vector2(6, 32)
 
 [node name="Laser" type="Area2D"]
 collision_layer = 8
@@ -11,13 +8,10 @@ collision_mask = 5
 script = ExtResource("1_3a3ko")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-scale = Vector2(0.8, 0.5)
 color = Color(0, 0, 1, 1)
-polygon = PackedVector2Array(0, 0, 8, 0, 8, -64, 0, -64)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, -16)
-shape = SubResource("RectangleShape2D_gtjh1")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 8, 0, 8, -8, 0, -8)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(3, -16)

@@ -1,10 +1,50 @@
 extends Node
 
-func draw_circle_polygon(points_total: int, radius: float, color: Color) -> Polygon2D:
+enum Type {
+	TRIANGLE,
+	CIRCLE,
+	SQUARE
+}
+
+func generate_random_shape(size: float, polygon_2d: Polygon2D) -> Type:
+	var asteroid_shape = Type.values().pick_random() as Type
+	
+	match asteroid_shape:
+		Type.TRIANGLE:
+			generate_triangle(size, polygon_2d)
+		Type.SQUARE:
+			generate_square(size, polygon_2d)
+		Type.CIRCLE:
+			generate_circle(size, polygon_2d)
+	return asteroid_shape
+
+func draw_circle_polygon(radius: float, sides: int) -> PackedVector2Array:
 	var points = PackedVector2Array()
-	for i in range(points_total + 1):
-		var point = deg_to_rad(i * 360.0 / points_total - 90)
-		points.push_back(Vector2.ZERO + Vector2(cos(point), sin(point)) * radius)
-	var polygon_2d = Polygon2D.new()
-	polygon_2d.draw_colored_polygon(points, color)
-	return polygon_2d
+	for i in sides:
+		var angle = (PI * 2) * i / sides
+		points.append(Vector2(cos(angle), sin(angle)) * radius)
+	return points
+	
+func get_max_shape_radius(polygon_2d: Polygon2D) -> float:
+	var max_distance := 0.0
+	for point in polygon_2d.polygon:
+		max_distance = max(max_distance, point.length())
+	return max_distance
+
+func generate_circle(size: float, polygon_2d: Polygon2D) -> void:
+	polygon_2d.polygon = draw_circle_polygon(size, 32)
+
+func generate_triangle(size: float, polygon_2d: Polygon2D) -> void:
+	polygon_2d.polygon = [
+				Vector2(0, -size),
+				Vector2(size, size),
+				Vector2(-size, size)
+			] # roughly centers triangle
+
+func generate_square(size: float, polygon_2d: Polygon2D) -> void:
+	polygon_2d.polygon = [
+				Vector2(-size, -size),
+				Vector2(size, -size),
+				Vector2(size, size),
+				Vector2(-size, size)
+			]

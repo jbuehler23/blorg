@@ -14,3 +14,5 @@ res://scenes/shapes/circle.tscn
 res://scenes/shapes/circle.gd
 res://scripts/laser.gd
 res://scripts/ships/player.gd
+res://scenes/hud.tscn
+res://scripts/hud.gd
