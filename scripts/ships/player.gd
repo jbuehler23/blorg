@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal laser_shot(laser)
+signal charge_depleted(charges)
 
 @export var acceleration := 10.0
 @export var max_speed := 350.0
@@ -74,6 +75,7 @@ func shoot_laser():
 	l.rotation = rotation
 	l.shape = shape
 	emit_signal("laser_shot", l)
+	emit_signal("charge_depleted", charges)
 		
 func draw_new_ship() -> void:
 	charges = max_charges

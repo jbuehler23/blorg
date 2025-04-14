@@ -1,12 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://df0x0v6cnu5vv"]
+[gd_scene load_steps=3 format=3 uid="uid://df0x0v6cnu5vv"]
 
 [ext_resource type="Script" uid="uid://q5p7xnbvu742" path="res://scripts/ships/player.gd" id="1_tn02d"]
+[ext_resource type="PackedScene" uid="uid://d1su5kypdx6kv" path="res://scenes/hud.tscn" id="2_p7acf"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_tn02d")
 ship_indicator_scale = 2
+
+[node name="HUD" parent="." instance=ExtResource("2_p7acf")]
+custom_minimum_size = Vector2(200, 200)
+size_flags_horizontal = 6
+size_flags_vertical = 6
 
 [node name="Ship" type="Polygon2D" parent="."]
 

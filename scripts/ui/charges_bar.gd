@@ -1,8 +1,5 @@
-extends Control
+extends ProgressBar
 
-@onready var debug_score: Label = $MarginContainer/DebugScore:
-	set(value):
-		debug_score.text = "SCORE: " + str(value)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
