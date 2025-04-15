@@ -1,10 +1,11 @@
 extends Control
+@onready var charges_bar: ProgressBar = $HBoxContainer/ChargesBar
+@onready var health_bar: ProgressBar = $HBoxContainer/HealthBar
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _on_player_charge_changed(charges: float, max_charges: float) -> void:
+	charges_bar.value = charges * 100 / max_charges
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_player_take_damage(damage: float, max_health: float) -> void:
+	health_bar.value = damage * 100 / max_health
+	

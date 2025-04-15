@@ -11,18 +11,20 @@ config_version=5
 [application]
 
 config/name="blorg"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/screens/game.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-ShapeBuilder="*res://scripts/shape_builder.gd"
+ShapeBuilder="*res://scripts/globals/shape_builder.gd"
+Global="*res://scripts/globals/global.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
 
 [input]
 

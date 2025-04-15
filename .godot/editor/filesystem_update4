@@ -16,3 +16,8 @@ res://scripts/laser.gd
 res://scripts/ships/player.gd
 res://scenes/hud.tscn
 res://scripts/hud.gd
+res://scripts/ui/charges_bar.gd
+res://scripts/ui/hud.gd
+res://scripts/camera_shake.gd
+res://scripts/global.gd
+res://scenes/screens/game.tscn

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bov58kwrig3yg"]
 
-[ext_resource type="Script" uid="uid://d3olhyl6rbc6g" path="res://scripts/laser.gd" id="1_3a3ko"]
+[ext_resource type="Script" uid="uid://d3olhyl6rbc6g" path="res://scripts/laser/laser.gd" id="1_3a3ko"]
 
 [node name="Laser" type="Area2D"]
 collision_layer = 8

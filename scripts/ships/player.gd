@@ -1,15 +1,22 @@
-extends CharacterBody2D
+class_name Ship extends CharacterBody2D
 
 signal laser_shot(laser)
-signal charge_depleted(charges)
+signal charge_changed(charges, max_charges)
+signal died()
+signal take_damage(damage, max_health)
 
 @export var acceleration := 10.0
 @export var max_speed := 350.0
 @export var rotation_speed := 250.0
 @export var rate_of_fire := 0.15
+@export var recharge_cooldown := 3.0
 @export var ship_size := 40.0
 @export var ship_indicator_scale := 4
 @export var max_charges := 10
+
+@export var max_health := 100.0
+var current_health
+
 @export var shape: ShapeBuilder.Type = ShapeBuilder.Type.TRIANGLE
 
 @onready var muzzle: Node2D = $Muzzle
@@ -18,6 +25,7 @@ signal charge_depleted(charges)
 @onready var right_indicator: Polygon2D = $RightIndicator/Polygon2D
 @onready var left_indicator: Polygon2D = $LeftIndicator/Polygon2D
 
+var can_fire: bool = true
 
 var laser_scene = preload("res://scenes/laser/laser.tscn")
 var charges = null
@@ -25,20 +33,19 @@ var shoot_cd = false
 
 
 func _ready() -> void:
+	current_health = max_health
 	draw_new_ship()
+	can_fire = true
+	charges = max_charges
 	
 
 func _process(_delta: float) -> void:
-	if Input.is_action_pressed("shoot"):
-		if not shoot_cd:
+	if Input.is_action_pressed("shoot") and can_fire:
+		if not shoot_cd and charges > 0:
 			shoot_cd = true
 			shoot_laser()
 			await get_tree().create_timer(rate_of_fire).timeout
 			shoot_cd = false
-
-	if charges <= 0:
-		draw_new_ship()
-		
 
 func _physics_process(delta: float) -> void:
 	var direction := Vector2(0, Input.get_axis("forward", "backward"))
@@ -75,10 +82,18 @@ func shoot_laser():
 	l.rotation = rotation
 	l.shape = shape
 	emit_signal("laser_shot", l)
-	emit_signal("charge_depleted", charges)
+	emit_signal("charge_changed", charges, max_charges)
+	Global.camera.shake(0.2, 3)
+	
+	if charges <= 0:
+		can_fire = false
+		await get_tree().create_timer(recharge_cooldown).timeout
+		charges = max_charges
+		can_fire = true
+		draw_new_ship()
+		emit_signal("charge_changed", charges, max_charges)
 		
 func draw_new_ship() -> void:
-	charges = max_charges
 	shape = ShapeBuilder.generate_random_shape(ship_size, ship)
 	var ship_indicator_size = ship_size / ship_indicator_scale
 	collision_polygon_2d.polygon = ship.polygon
@@ -98,3 +113,15 @@ func draw_new_ship() -> void:
 
 	right_indicator.color = Color.HOT_PINK
 	left_indicator.color = Color.HOT_PINK
+
+func damage(amount: float) -> void:
+	current_health -= amount
+	take_damage.emit(current_health, max_health)
+	if current_health <= 0:
+		die()
+
+func die():
+	died.emit()
+	#ship.visible = false
+	#process_mode = Node.PROCESS_MODE_DISABLED
+	queue_free()

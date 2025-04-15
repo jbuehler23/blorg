@@ -1,4 +1,6 @@
 extends ProgressBar
+@onready var charges_bar: ProgressBar = $HBoxContainer/ChargesBar
+@onready var health_bar: ProgressBar = $HBoxContainer/HealthBar
 
 
 # Called when the node enters the scene tree for the first time.

@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://btuoglk8nccmo"]
+
+[ext_resource type="Script" uid="uid://c34hl32kw8c0g" path="res://scripts/globals/game.gd" id="1_o78e0"]
+[ext_resource type="Script" uid="uid://cj2krpjorx8vx" path="res://scripts/ui/camera_shake.gd" id="2_ln6eb"]
+[ext_resource type="PackedScene" uid="uid://df0x0v6cnu5vv" path="res://scenes/ships/player.tscn" id="3_4ji0l"]
+[ext_resource type="PackedScene" uid="uid://cimgh0dgo5fje" path="res://scenes/asteroids/asteroid.tscn" id="4_0q6jn"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_o78e0")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(640, 360)
+drag_left_margin = 0.0
+drag_top_margin = 0.0
+drag_right_margin = 0.0
+drag_bottom_margin = 0.0
+script = ExtResource("2_ln6eb")
+default_offset = Vector2(640, 360)
+
+[node name="Timer" type="Timer" parent="Camera2D"]
+
+[node name="Player" parent="." instance=ExtResource("3_4ji0l")]
+position = Vector2(640, 360)
+scale = Vector2(0.6, 0.6)
+ship_indicator_scale = 3
+
+[node name="Lasers" type="Node" parent="."]
+
+[node name="Asteroids" type="Node" parent="."]
+
+[node name="Asteroid" parent="Asteroids" instance=ExtResource("4_0q6jn")]
+position = Vector2(384, 256)
+shape = 1
+
+[node name="Asteroid2" parent="Asteroids" instance=ExtResource("4_0q6jn")]
+position = Vector2(200, 80)
+shape = 1
+
+[node name="Asteroid3" parent="Asteroids" instance=ExtResource("4_0q6jn")]
+position = Vector2(176, 472)
+shape = 1
+
+[node name="Asteroid4" parent="Asteroids" instance=ExtResource("4_0q6jn")]
+position = Vector2(1064, 504)
+shape = 1
+
+[node name="Asteroid5" parent="Asteroids" instance=ExtResource("4_0q6jn")]
+position = Vector2(1088, 72)
+shape = 1
+
+[connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="_on_timer_timeout"]
+[connection signal="died" from="Player" to="." method="_on_player_died"]

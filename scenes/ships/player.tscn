@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://df0x0v6cnu5vv"]
 
 [ext_resource type="Script" uid="uid://q5p7xnbvu742" path="res://scripts/ships/player.gd" id="1_tn02d"]
-[ext_resource type="PackedScene" uid="uid://d1su5kypdx6kv" path="res://scenes/hud.tscn" id="2_p7acf"]
+[ext_resource type="PackedScene" uid="uid://d1su5kypdx6kv" path="res://scenes/screens/hud.tscn" id="2_p7acf"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -35,3 +35,6 @@ position = Vector2(40, 0)
 position = Vector2(-40, 0)
 
 [node name="Polygon2D" type="Polygon2D" parent="LeftIndicator"]
+
+[connection signal="charge_changed" from="." to="HUD" method="_on_player_charge_changed"]
+[connection signal="take_damage" from="." to="HUD" method="_on_player_take_damage"]

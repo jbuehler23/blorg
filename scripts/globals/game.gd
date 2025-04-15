@@ -11,6 +11,7 @@ var score: int = 0
 func _ready() -> void:
 	player.connect("laser_shot", _on_player_laser_shot)
 	
+	
 	for asteroid in asteroids.get_children():
 		asteroid.connect("exploded", _on_asteroid_exploded)
 
@@ -42,3 +43,8 @@ func spawn_asteroid(pos, size):
 	a.connect("exploded", _on_asteroid_exploded)
 	asteroids.call_deferred("add_child", a)
 	
+
+
+func _on_player_died() -> void:
+	#TODO: play a new scene or game over or something
+	get_tree().call_deferred("reload_current_scene")

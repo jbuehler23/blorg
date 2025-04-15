@@ -5,7 +5,7 @@ signal exploded(pos, size, points)
 var movement_vector := Vector2(0, -1)
 var speed := 50.0
 @export var asteroid_size := AsteroidSize.LARGE
-@export var shape := Shape.TRIANGLE
+@export var shape := ShapeBuilder.Type.TRIANGLE
 
 @onready var polygon_2d: Polygon2D = $Polygon2D
 @onready var collision_polygon_2d: CollisionPolygon2D = $CollisionPolygon2D
@@ -15,12 +15,6 @@ enum AsteroidSize {
 	LARGE,
 	MEDIUM,
 	SMALL
-}
-
-enum Shape {
-	TRIANGLE,
-	CIRCLE,
-	SQUARE
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -41,7 +35,7 @@ func _ready() -> void:
 			speed = randf_range(100.0, 200.0)
 			shape_size = randf_range(7.0, 10.0)
 			points = 25
-	ShapeBuilder.generate_random_shape(shape_size, polygon_2d)
+	shape = ShapeBuilder.generate_random_shape(shape_size, polygon_2d)
 	collision_polygon_2d.polygon = polygon_2d.polygon
 			
 
@@ -67,3 +61,28 @@ func explode() -> void:
 	queue_free()
 	
 	
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Ship:
+		if body.shape == shape:
+			##TODO: use a cooldown instead, seems to hard to restrict shooting entirely
+			if body.charges < body.max_charges:
+				print(str("increasing charges"))
+				body.can_fire = true
+				match asteroid_size:
+					AsteroidSize.LARGE:
+						body.charges += 5
+					AsteroidSize.MEDIUM:
+						body.charges += 3
+					AsteroidSize.SMALL:
+						body.charges += 1
+				body.charge_changed.emit(body.charges, body.max_charges)
+		else:
+			match asteroid_size:
+					AsteroidSize.LARGE:
+						body.damage(50)
+					AsteroidSize.MEDIUM:
+						body.damage(30)
+					AsteroidSize.SMALL:
+						body.damage(10)
