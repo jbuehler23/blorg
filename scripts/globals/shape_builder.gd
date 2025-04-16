@@ -33,6 +33,7 @@ func get_max_shape_radius(polygon_2d: Polygon2D) -> float:
 
 func generate_circle(size: float, polygon_2d: Polygon2D) -> void:
 	polygon_2d.polygon = draw_circle_polygon(size, 32)
+	polygon_2d.color = Color.html("#d17a8b")
 
 func generate_triangle(size: float, polygon_2d: Polygon2D) -> void:
 	polygon_2d.polygon = [
@@ -40,7 +41,8 @@ func generate_triangle(size: float, polygon_2d: Polygon2D) -> void:
 				Vector2(size, size),
 				Vector2(-size, size)
 			] # roughly centers triangle
-
+	polygon_2d.color = Color.html("#2a6e99")
+	
 func generate_square(size: float, polygon_2d: Polygon2D) -> void:
 	polygon_2d.polygon = [
 				Vector2(-size, -size),
@@ -48,3 +50,4 @@ func generate_square(size: float, polygon_2d: Polygon2D) -> void:
 				Vector2(size, size),
 				Vector2(-size, size)
 			]
+	polygon_2d.color = Color.html("#c96842")

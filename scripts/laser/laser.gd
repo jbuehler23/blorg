@@ -3,6 +3,7 @@ class_name Laser extends Area2D
 @export var projectile_speed := 500.0
 @export var shape: ShapeBuilder.Type = ShapeBuilder.Type.TRIANGLE
 @export var projectile_size := 10
+@export var damage_multiplier := 10
 
 var movement_vector := Vector2(0, -1)
 @onready var collision_shape_2d: CollisionPolygon2D = $CollisionPolygon2D
@@ -33,3 +34,12 @@ func _on_area_entered(area: Area2D) -> void:
 		var asteroid = area
 		asteroid.explode()
 		queue_free()
+	elif area is ConeHead:
+		var cone_head = area
+		cone_head.damage(10)
+		
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Ship:
+		var ship = body
+		ship.damage(10 * damage_multiplier)

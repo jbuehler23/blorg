@@ -109,34 +109,25 @@ ship_indicator_scale = 3
 
 [node name="Lasers" type="Node" parent="."]
 
-[node name="AsteroidSpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
-
 [node name="Asteroids" type="Node" parent="."]
 
 [node name="Asteroid" parent="Asteroids" instance=ExtResource("4_0q6jn")]
-visible = false
 position = Vector2(384, 256)
 shape = 1
 
 [node name="Asteroid2" parent="Asteroids" instance=ExtResource("4_0q6jn")]
-visible = false
 position = Vector2(200, 80)
 shape = 1
 
 [node name="Asteroid3" parent="Asteroids" instance=ExtResource("4_0q6jn")]
-visible = false
 position = Vector2(176, 472)
 shape = 1
 
 [node name="Asteroid4" parent="Asteroids" instance=ExtResource("4_0q6jn")]
-visible = false
 position = Vector2(1064, 504)
 shape = 1
 
 [node name="Asteroid5" parent="Asteroids" instance=ExtResource("4_0q6jn")]
-visible = false
 position = Vector2(1088, 72)
 shape = 1
 
@@ -150,10 +141,6 @@ libraries = {
 
 [connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="_on_timer_timeout"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
-[connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_asteroid_spawn_timer_timeout"]
-[connection signal="died" from="ConeHead" to="." method="_on_cone_head_died"]
-[connection signal="take_damage" from="ConeHead" to="ConeHead/Body/HUD" method="_on_cone_head_take_damage"]
 [connection signal="animation_finished" from="ConeHead/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 
 [editable path="ConeHead"]
-[editable path="ConeHead/Body/HUD"]

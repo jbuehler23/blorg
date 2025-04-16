@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1su5kypdx6kv"]
+[gd_scene load_steps=4 format=3 uid="uid://d1su5kypdx6kv"]
 
-[ext_resource type="Script" uid="uid://biwb383vefovv" path="res://scripts/ui/hud.gd" id="1_ahhtf"]
+[ext_resource type="Script" uid="uid://biwb383vefovv" path="res://scripts/ui/hud.gd" id="1_hxtk5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hxtk5"]
+bg_color = Color(0.117647, 0.52549, 0.27451, 0.784314)
+border_color = Color(0.340339, 0.340339, 0.340339, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0tvv"]
+bg_color = Color(0.145098, 0.647059, 0.886275, 0.784314)
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -13,22 +21,32 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("1_ahhtf")
+script = ExtResource("1_hxtk5")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 offset_right = 200.0
 offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_vertical = 8
+alignment = 2
 
 [node name="HealthBar" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
+theme_override_styles/fill = SubResource("StyleBoxFlat_hxtk5")
 value = 100.0
+show_percentage = false
 
 [node name="ChargesBar" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
+theme_override_styles/fill = SubResource("StyleBoxFlat_v0tvv")
 value = 100.0
+show_percentage = false

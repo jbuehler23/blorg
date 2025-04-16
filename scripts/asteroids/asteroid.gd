@@ -1,6 +1,7 @@
 class_name Asteroid extends Area2D
 
 signal exploded(pos, size, points)
+signal sucked()
 
 var movement_vector := Vector2(0, -1)
 var speed := 50.0
@@ -16,6 +17,11 @@ enum AsteroidSize {
 	MEDIUM,
 	SMALL
 }
+
+var is_being_sucked := false
+var suck_target := Vector2.ZERO
+var suck_speed := 200.0
+var rotation_speed := 10.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -55,6 +61,16 @@ func _physics_process(delta: float) -> void:
 		global_position.x = screen_size.x + margin
 	elif global_position.x - margin > screen_size.x:
 		global_position.x = -margin
+	
+	if is_being_sucked:
+		var dir = (suck_target - global_position).normalized()
+		global_position += dir * suck_speed * delta
+		rotation += rotation_speed * delta
+		scale = scale.move_toward(Vector2.ZERO, delta * 2.0)
+		
+		if global_position.distance_to(suck_target) < 10.0:
+			sucked.emit()
+			queue_free()
 
 func explode() -> void:
 	emit_signal("exploded", global_position, asteroid_size, points)
@@ -86,3 +102,8 @@ func _on_body_entered(body: Node2D) -> void:
 						body.damage(30)
 					AsteroidSize.SMALL:
 						body.damage(10)
+						
+func start_sucking(target: Vector2) -> void:
+	is_being_sucked = true
+	suck_target = target
+	

@@ -21,3 +21,10 @@ res://scripts/ui/hud.gd
 res://scripts/camera_shake.gd
 res://scripts/global.gd
 res://scenes/screens/game.tscn
+res://scenes/screens/hud.tscn
+res://scenes/bosses/cone_head.tscn
+res://scripts/ui/camera_shake.gd
+res://scripts/globals/shape_builder.gd
+res://scripts/bosses/cone_head.gd
+res://scripts/globals/game.gd
+res://scripts/laser/laser.gd

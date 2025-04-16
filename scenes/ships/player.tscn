@@ -10,7 +10,12 @@ script = ExtResource("1_tn02d")
 ship_indicator_scale = 2
 
 [node name="HUD" parent="." instance=ExtResource("2_p7acf")]
+clip_contents = true
 custom_minimum_size = Vector2(200, 200)
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
@@ -24,7 +29,7 @@ points = PackedVector2Array(0, -56, 0, -40)
 width = 5.0
 
 [node name="Muzzle" type="Node2D" parent="."]
-position = Vector2(0, -56)
+position = Vector2(0, -64)
 
 [node name="RightIndicator" type="Node2D" parent="."]
 position = Vector2(40, 0)

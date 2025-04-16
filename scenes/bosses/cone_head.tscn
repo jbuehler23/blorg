@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://djnhvnk2mbswh"]
+
+[ext_resource type="Script" uid="uid://d2cemhjq8358" path="res://scripts/bosses/cone_head.gd" id="1_cageg"]
+[ext_resource type="PackedScene" uid="uid://d1su5kypdx6kv" path="res://scenes/screens/hud.tscn" id="2_ufgre"]
+
+[node name="ConeHead" type="Area2D"]
+collision_mask = 11
+script = ExtResource("1_cageg")
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2(32, 80)
+
+[node name="Body" type="Node2D" parent="."]
+position = Vector2(32, 16)
+
+[node name="HUD" parent="Body" instance=ExtResource("2_ufgre")]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="HBoxContainer" parent="Body/HUD" index="0"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -48.0
+offset_right = 58.0
+offset_bottom = 74.0
+grow_vertical = 2
+
+[node name="ChargesBar" parent="Body/HUD/HBoxContainer" index="1"]
+visible = false
+
+[node name="Head" type="Polygon2D" parent="Body"]
+position = Vector2(-32, -16)
+polygon = PackedVector2Array(0, 0, 32, -64, 64, 0, 64, 56, 56, 64, 8, 64, 0, 56)
+
+[node name="MouthShut" type="Polygon2D" parent="Body/Head"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(16, 40, 48, 40, 40, 48, 24, 48)
+
+[node name="MouthOpen" type="Polygon2D" parent="Body/Head"]
+visible = false
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(16, 40, 48, 40, 48, 64, 16, 64)
+
+[node name="LeftEye" type="Polygon2D" parent="Body/Head"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(16, 24, 16, 8, 24, 8, 24, 24)
+
+[node name="RightEye" type="Polygon2D" parent="Body/Head"]
+position = Vector2(24, 0)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(16, 24, 16, 8, 24, 8, 24, 24)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 0, 8, 8, 8, 8, 0)
+
+[node name="FireTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
+
+[editable path="Body/HUD"]
