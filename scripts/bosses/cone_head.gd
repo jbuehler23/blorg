@@ -2,6 +2,8 @@ class_name ConeHead extends Area2D
 
 signal take_damage(current_health, max_health)
 signal died()
+signal reset()
+signal health_set(max_health)
 
 @onready var muzzle: Node2D = $Muzzle
 @onready var fire_timer: Timer = $FireTimer
@@ -33,6 +35,7 @@ var laser_scene = preload("res://scenes/laser/laser.tscn")
 func fight() -> void:
 	spawned = true
 	current_phase += 1
+	health_set.emit(max_health)
 	set_phase_parameters(current_phase)
 	fire_timer.wait_time = fire_rate
 	fire_timer.start()
@@ -99,14 +102,12 @@ func damage(amount: int) -> void:
 	current_health -= amount
 	take_damage.emit(current_health, max_health)
 	if current_health <= 0:
-		if current_phase <= 3:
+		if current_phase == 3:
 			died.emit()
 		else:
-			run_away()
-			
-func run_away() -> void:
+			spawned = false
+			reset.emit()
 	
-	spawned = false
 	
 func _on_fire_timer_timeout() -> void:
 	original_position = global_position

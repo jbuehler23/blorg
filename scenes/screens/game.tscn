@@ -1,25 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://btuoglk8nccmo"]
+[gd_scene load_steps=11 format=3 uid="uid://btuoglk8nccmo"]
 
 [ext_resource type="Script" uid="uid://c34hl32kw8c0g" path="res://scripts/globals/game.gd" id="1_o78e0"]
 [ext_resource type="Script" uid="uid://cj2krpjorx8vx" path="res://scripts/ui/camera_shake.gd" id="2_ln6eb"]
 [ext_resource type="PackedScene" uid="uid://df0x0v6cnu5vv" path="res://scenes/ships/player.tscn" id="3_4ji0l"]
 [ext_resource type="PackedScene" uid="uid://djnhvnk2mbswh" path="res://scenes/bosses/cone_head.tscn" id="5_ln6eb"]
-
-[sub_resource type="Animation" id="Animation_ln6eb"]
-resource_name = "conehead_peek"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1320, 336), Vector2(1248, 336), Vector2(1328, 336)]
-}
 
 [sub_resource type="Animation" id="Animation_4ji0l"]
 length = 0.001
@@ -48,19 +32,20 @@ tracks/1/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_0q6jn"]
-resource_name = "conehead_suck"
+[sub_resource type="Animation" id="Animation_ln6eb"]
+resource_name = "conehead_peek"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Body/Head/MouthOpen:visible")
+tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1320, 336), Vector2(1248, 336), Vector2(1328, 336)]
 }
 
 [sub_resource type="Animation" id="Animation_kauht"]
@@ -79,6 +64,21 @@ tracks/0/keys = {
 "values": [Vector2(608, -120), Vector2(608, 136)]
 }
 
+[sub_resource type="Animation" id="Animation_0q6jn"]
+resource_name = "conehead_suck"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Head/MouthOpen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4ji0l"]
 _data = {
 &"RESET": SubResource("Animation_4ji0l"),
@@ -86,6 +86,12 @@ _data = {
 &"conehead_spawn": SubResource("Animation_kauht"),
 &"conehead_suck": SubResource("Animation_0q6jn")
 }
+
+[sub_resource type="Environment" id="Environment_o78e0"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.45
+glow_blend_mode = 1
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_o78e0")
@@ -122,10 +128,15 @@ libraries = {
 &"": SubResource("AnimationLibrary_4ji0l")
 }
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_o78e0")
+
 [connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="_on_timer_timeout"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_asteroid_spawn_timer_timeout"]
 [connection signal="died" from="ConeHead" to="." method="_on_cone_head_died"]
+[connection signal="health_set" from="ConeHead" to="ConeHead/Body/HUD" method="_on_cone_head_health_set"]
+[connection signal="reset" from="ConeHead" to="." method="_on_cone_head_reset"]
 [connection signal="take_damage" from="ConeHead" to="ConeHead/Body/HUD" method="_on_cone_head_take_damage"]
 [connection signal="animation_finished" from="ConeHead/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 

@@ -8,6 +8,7 @@ collision_mask = 11
 script = ExtResource("1_n3rl4")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+self_modulate = Color(1.5, 1.5, 1.5, 1)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, 8, 64, 8, 64, 72, 0, 72)

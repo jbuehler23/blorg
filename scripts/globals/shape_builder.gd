@@ -41,7 +41,7 @@ func generate_triangle(size: float, polygon_2d: Polygon2D) -> void:
 				Vector2(size, size),
 				Vector2(-size, size)
 			] # roughly centers triangle
-	polygon_2d.color = Color.html("#2a6e99")
+	polygon_2d.color = Color.html("#973b39")
 	
 func generate_square(size: float, polygon_2d: Polygon2D) -> void:
 	polygon_2d.polygon = [

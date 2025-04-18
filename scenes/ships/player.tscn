@@ -20,6 +20,8 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="Ship" type="Polygon2D" parent="."]
+self_modulate = Color(1.2, 1.2, 1.2, 1)
+antialiased = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -40, 32, 24, -32, 24)
@@ -41,5 +43,9 @@ position = Vector2(-40, 0)
 
 [node name="Polygon2D" type="Polygon2D" parent="LeftIndicator"]
 
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="charge_changed" from="." to="HUD" method="_on_player_charge_changed"]
 [connection signal="take_damage" from="." to="HUD" method="_on_player_take_damage"]
+[connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]

@@ -24,6 +24,7 @@ var current_health
 @onready var collision_polygon_2d: CollisionPolygon2D = $CollisionPolygon2D
 @onready var right_indicator: Polygon2D = $RightIndicator/Polygon2D
 @onready var left_indicator: Polygon2D = $LeftIndicator/Polygon2D
+@onready var flash_timer: Timer = $FlashTimer
 
 var can_fire: bool = true
 
@@ -76,23 +77,44 @@ func _physics_process(delta: float) -> void:
 		global_position.x = 0
 
 func shoot_laser():
+	match shape:
+		ShapeBuilder.Type.TRIANGLE:
+			await triangle_burst()
+		ShapeBuilder.Type.CIRCLE:
+			shotgun_burst()
+		ShapeBuilder.Type.SQUARE:
+			normal_shot()
+	emit_signal("charge_changed", charges, max_charges)
+	
+	if charges <= 0:
+		can_fire = false
+		flash_timer.start()
+		await get_tree().create_timer(recharge_cooldown).timeout
+		charges = max_charges
+		can_fire = true
+		draw_new_ship()
+		ship.modulate = Color.WHITE
+		emit_signal("charge_changed", charges, max_charges)
+
+func triangle_burst() -> void:
+	if charges >= 3:
+		for i in 3:
+			fire_laser()
+			await get_tree().create_timer(0.1).timeout
+		charges -= 3
+	else:
+		fire_laser()
+		charges -= 1
+		
+func fire_laser() -> void:
 	charges -= 1
 	var l = laser_scene.instantiate() as Laser
 	l.global_position = muzzle.global_position
 	l.rotation = rotation
 	l.shape = shape
 	emit_signal("laser_shot", l)
-	emit_signal("charge_changed", charges, max_charges)
 	Global.camera.shake(0.2, 3)
 	
-	if charges <= 0:
-		can_fire = false
-		await get_tree().create_timer(recharge_cooldown).timeout
-		charges = max_charges
-		can_fire = true
-		draw_new_ship()
-		emit_signal("charge_changed", charges, max_charges)
-		
 func draw_new_ship() -> void:
 	shape = ShapeBuilder.generate_random_shape(ship_size, ship)
 	var ship_indicator_size = ship_size / ship_indicator_scale
@@ -125,3 +147,14 @@ func die():
 	#ship.visible = false
 	#process_mode = Node.PROCESS_MODE_DISABLED
 	queue_free()
+
+
+func _on_flash_timer_timeout() -> void:
+	if not can_fire:
+		if ship.modulate == Color.WHITE:
+			ship.modulate = Color.RED
+		else:
+			ship.modulate = Color.WHITE
+	else:
+		ship.modulate = Color.WHITE
+		flash_timer.stop()

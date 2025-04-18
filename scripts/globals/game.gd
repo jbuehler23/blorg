@@ -36,12 +36,12 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):
 		get_tree().reload_current_scene()
 		
-	if score >= 200 and not conehead_spawned:
-		spawn_conehead(cone_head.current_phase)
-	if conehead_spawned && waiting_for_conehead_to_clear and asteroids.get_child_count() == 0:
-		cone_head.fight()
-		waiting_for_conehead_to_clear = false
-		mouth_open.visible = false
+	#if score >= 200 and not conehead_spawned:
+		#spawn_conehead(cone_head.current_phase)
+	#if conehead_spawned && waiting_for_conehead_to_clear and asteroids.get_child_count() == 0:
+		#cone_head.fight()
+		#waiting_for_conehead_to_clear = false
+		#mouth_open.visible = false
 		
 func _on_asteroid_exploded(pos, size, points):
 	score += points
@@ -106,3 +106,9 @@ func _on_asteroid_spawn_timer_timeout() -> void:
 func _on_cone_head_died() -> void:
 	infinite_asteroids = true
 	asteroid_spawn_timer.start()
+
+
+func _on_cone_head_reset() -> void:
+	infinite_asteroids = true
+	asteroid_spawn_timer.start()
+	cone_head_animation_player.play("RESET")

@@ -1,4 +1,5 @@
 Timer
+WorldEnvironment
 AnimationPlayer
 Node2D
 Node
@@ -11,4 +12,3 @@ Camera2D
 ProgressBar
 HBoxContainer
 MarginContainer
-Label
