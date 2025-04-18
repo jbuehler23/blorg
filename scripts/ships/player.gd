@@ -81,7 +81,7 @@ func shoot_laser():
 		ShapeBuilder.Type.TRIANGLE:
 			await triangle_burst()
 		ShapeBuilder.Type.CIRCLE:
-			shotgun_burst()
+			shotgun_blast()
 		ShapeBuilder.Type.SQUARE:
 			normal_shot()
 	emit_signal("charge_changed", charges, max_charges)
@@ -96,15 +96,24 @@ func shoot_laser():
 		ship.modulate = Color.WHITE
 		emit_signal("charge_changed", charges, max_charges)
 
+func shotgun_blast() -> void:
+	var count = 5
+	var spread = deg_to_rad(30.0)
+	var half = count / 2
+	for i in count:
+		var angle = rotation + (i - half) * (spread / count)
+		fire_laser()
+
+func normal_shot() -> void:
+	fire_laser()
+
 func triangle_burst() -> void:
 	if charges >= 3:
 		for i in 3:
 			fire_laser()
 			await get_tree().create_timer(0.1).timeout
-		charges -= 3
 	else:
 		fire_laser()
-		charges -= 1
 		
 func fire_laser() -> void:
 	charges -= 1
