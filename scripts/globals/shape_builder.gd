@@ -6,6 +6,17 @@ enum Type {
 	SQUARE
 }
 
+func resize_shape(size: float, polygon_2d: Polygon2D, shape: Type) -> Type:
+	match shape:
+		Type.TRIANGLE:
+			generate_triangle(size, polygon_2d)
+		Type.SQUARE:
+			generate_square(size, polygon_2d)
+		Type.CIRCLE:
+			generate_circle(size, polygon_2d)
+	return shape
+		
+
 func generate_random_shape(size: float, polygon_2d: Polygon2D) -> Type:
 	var asteroid_shape = Type.values().pick_random() as Type
 	

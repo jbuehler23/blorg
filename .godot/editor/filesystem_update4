@@ -5,3 +5,13 @@ res://scenes/laser/laser.tscn
 res://scenes/asteroids/asteroid.tscn
 res://scenes/screens/hud.tscn
 res://scenes/bosses/cone_head.tscn
+res://scripts/globals/game.gd
+res://scenes/screens/warning_overlay.tscn
+res://scripts/ui/warning_overlay.gd
+res://scripts/asteroids/asteroid.gd
+res://scenes/screens/Game_HUD.tscn
+res://scripts/ui/game_hud.gd
+res://scripts/globals/shape_builder.gd
+res://scripts/ui/hud.gd
+res://scripts/laser/laser.gd
+res://default_bus_layout.tres

@@ -1,11 +1,14 @@
 extends Node2D
 
+signal score_updated(score, boss_spawn_threshold)
+signal grow_ship()
+
 @onready var lasers: Node = $Lasers
 @onready var player: CharacterBody2D = $Player
 @onready var asteroids: Node = $Asteroids
 @export var asteroid_child_size := 2
 @export var conehead_spawn_score := 100
-@export var max_asteroids := 7
+@export var max_asteroids := 10
 @export var infinite_asteroids := true
 @export var asteroid_spawn_radius := 400
 
@@ -13,15 +16,27 @@ extends Node2D
 @onready var cone_head_animation_player: AnimationPlayer = $ConeHead/AnimationPlayer
 @onready var mouth_open: Polygon2D = $ConeHead/Body/Head/MouthOpen
 @onready var asteroid_spawn_timer: Timer = $AsteroidSpawnTimer
+@onready var asteroid_spawner: Marker2D = $AsteroidSpawner
+@onready var warning_overlay: WarningOverlay = $WarningOverlay
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var asteroid_scene = preload("res://scenes/asteroids/asteroid.tscn")
 var conehead_spawned = false
 var score: int = 0
 var waiting_for_conehead_to_clear = true
+var clearing_asteroids := false
+
+@export var boss_threshold := 500
+@export var boss_threshold_increment := 1000
+var boss_triggered := false
+
+@export var growth_threshold := 15
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player.connect("laser_shot", _on_player_laser_shot)
-	
+	warning_overlay.connect("warning_finished", _on_warning_finished_flashing)
 	
 	for asteroid in asteroids.get_children():
 		asteroid.connect("exploded", _on_asteroid_exploded)
@@ -29,13 +44,15 @@ func _ready() -> void:
 
 
 func _on_player_laser_shot(laser):
+	$LaserSFX.pitch_scale = randf_range(0.5, 1.0)
+	$LaserSFX.play()
 	lasers.add_child(laser)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("reset"):
 		get_tree().reload_current_scene()
-		
+	
 	#if score >= 200 and not conehead_spawned:
 		#spawn_conehead(cone_head.current_phase)
 	#if conehead_spawned && waiting_for_conehead_to_clear and asteroids.get_child_count() == 0:
@@ -44,16 +61,55 @@ func _process(_delta: float) -> void:
 		#mouth_open.visible = false
 		
 func _on_asteroid_exploded(pos, size, points):
+	if clearing_asteroids:
+		return
+	
+	#$ExplodeSFX.pitch_scale = randf_range(0.5, 1.0)
+	$ExplodeSFX.play()
+	
 	score += points
+	score_updated.emit(score, boss_threshold)
+	grow_ship.emit()
 	for i in range(asteroid_child_size):
 		match size:
+			Asteroid.AsteroidSize.BOSS:
+				spawn_asteroid(pos, Asteroid.AsteroidSize.LARGE)
+				boss_triggered = false
+				infinite_asteroids = true
+				asteroid_spawn_timer.start()
 			Asteroid.AsteroidSize.LARGE:
 				spawn_asteroid(pos, Asteroid.AsteroidSize.MEDIUM)
 			Asteroid.AsteroidSize.MEDIUM:
 				spawn_asteroid(pos, Asteroid.AsteroidSize.SMALL)
 			Asteroid.AsteroidSize.SMALL:
 				pass
+	
+	if score >= boss_threshold and not boss_triggered:
+		boss_triggered = true
+		show_warning_then_spawn_boss()
+		boss_threshold += randf_range(1500, 3000)
 			
+
+func show_warning_then_spawn_boss() -> void:
+	warning_overlay.show_warning()
+
+func _on_warning_finished_flashing() -> void:
+	spawn_boss_asteroid()
+	
+func spawn_boss_asteroid() -> void:
+	infinite_asteroids = false
+	asteroid_spawn_timer.stop()
+	clear_asteroids()
+	#suck_asteroids()
+	var spawn_pos = player.global_position + Vector2.RIGHT.rotated(randf_range(0, TAU)) * asteroid_spawn_radius
+	spawn_asteroid(spawn_pos, Asteroid.AsteroidSize.BOSS)
+	
+func clear_asteroids() -> void:
+	clearing_asteroids = true
+	for asteroid in asteroids.get_children():
+		asteroid.queue_free()
+	await get_tree().process_frame # give it a frame to clear properly
+	clearing_asteroids = false
 	
 func spawn_asteroid(pos, size):
 	var a = asteroid_scene.instantiate()
@@ -84,11 +140,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "conehead_spawn":
 		mouth_open.visible = true
 		suck_asteroids()
+	elif anim_name == "fly_away":
+		clear_asteroids()
+		modulate = Color.BLACK
 
 func suck_asteroids() -> void:
 	for asteroid in asteroids.get_children():
 		asteroid.start_sucking(mouth_open.global_position)
-	waiting_for_conehead_to_clear = true
 		
 
 
@@ -99,6 +157,7 @@ func _on_asteroid_spawn_timer_timeout() -> void:
 		return
 		
 	var spawn_pos = player.global_position + Vector2.RIGHT.rotated(randf_range(0, TAU)) * asteroid_spawn_radius
+	#var spawn_pos = asteroid_spawner.position
 	spawn_asteroid(spawn_pos, Asteroid.AsteroidSize.LARGE)
 		
 
@@ -112,3 +171,12 @@ func _on_cone_head_reset() -> void:
 	infinite_asteroids = true
 	asteroid_spawn_timer.start()
 	cone_head_animation_player.play("RESET")
+
+
+func _on_player_win_game() -> void:
+	Global.camera.shake(10, 8)
+	clear_asteroids()
+	infinite_asteroids = false
+	asteroid_spawn_timer.stop()
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	animation_player.play("fly_away")

@@ -9,19 +9,31 @@ collision_mask = 5
 script = ExtResource("1_tn02d")
 ship_indicator_scale = 2
 
-[node name="HUD" parent="." instance=ExtResource("2_p7acf")]
-clip_contents = true
-custom_minimum_size = Vector2(200, 200)
-offset_left = -75.0
-offset_top = -75.0
-offset_right = 75.0
-offset_bottom = 75.0
-size_flags_horizontal = 6
-size_flags_vertical = 6
-
 [node name="Ship" type="Polygon2D" parent="."]
 self_modulate = Color(1.2, 1.2, 1.2, 1)
 antialiased = true
+
+[node name="RightIndicator" type="Node2D" parent="Ship"]
+position = Vector2(40, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="Ship/RightIndicator"]
+
+[node name="LeftIndicator" type="Node2D" parent="Ship"]
+position = Vector2(-40, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="Ship/LeftIndicator"]
+
+[node name="HUD" parent="Ship" instance=ExtResource("2_p7acf")]
+custom_minimum_size = Vector2(200, 200)
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Muzzle" type="Node2D" parent="Ship"]
+position = Vector2(0, -64)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, -40, 32, 24, -32, 24)
@@ -30,22 +42,9 @@ polygon = PackedVector2Array(0, -40, 32, 24, -32, 24)
 points = PackedVector2Array(0, -56, 0, -40)
 width = 5.0
 
-[node name="Muzzle" type="Node2D" parent="."]
-position = Vector2(0, -64)
-
-[node name="RightIndicator" type="Node2D" parent="."]
-position = Vector2(40, 0)
-
-[node name="Polygon2D" type="Polygon2D" parent="RightIndicator"]
-
-[node name="LeftIndicator" type="Node2D" parent="."]
-position = Vector2(-40, 0)
-
-[node name="Polygon2D" type="Polygon2D" parent="LeftIndicator"]
-
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.1
 
-[connection signal="charge_changed" from="." to="HUD" method="_on_player_charge_changed"]
-[connection signal="take_damage" from="." to="HUD" method="_on_player_take_damage"]
+[connection signal="charge_changed" from="." to="Ship/HUD" method="_on_player_charge_changed"]
+[connection signal="take_damage" from="." to="Ship/HUD" method="_on_player_take_damage"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]

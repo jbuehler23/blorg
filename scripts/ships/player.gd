@@ -4,6 +4,8 @@ signal laser_shot(laser)
 signal charge_changed(charges, max_charges)
 signal died()
 signal take_damage(damage, max_health)
+signal request_grow()
+signal win_game()
 
 @export var acceleration := 10.0
 @export var max_speed := 350.0
@@ -12,18 +14,20 @@ signal take_damage(damage, max_health)
 @export var recharge_cooldown := 3.0
 @export var ship_size := 40.0
 @export var ship_indicator_scale := 4
-@export var max_charges := 10
+@export var max_charges := 20
+@export var max_ship_size := 100.0
+@export var growth_step := 3.0
 
 @export var max_health := 100.0
 var current_health
 
 @export var shape: ShapeBuilder.Type = ShapeBuilder.Type.TRIANGLE
 
-@onready var muzzle: Node2D = $Muzzle
+@onready var muzzle: Node2D = $Ship/Muzzle
 @onready var ship: Polygon2D = $Ship
 @onready var collision_polygon_2d: CollisionPolygon2D = $CollisionPolygon2D
-@onready var right_indicator: Polygon2D = $RightIndicator/Polygon2D
-@onready var left_indicator: Polygon2D = $LeftIndicator/Polygon2D
+@onready var right_indicator: Polygon2D = $Ship/RightIndicator/Polygon2D
+@onready var left_indicator: Polygon2D = $Ship/LeftIndicator/Polygon2D
 @onready var flash_timer: Timer = $FlashTimer
 
 var can_fire: bool = true
@@ -33,9 +37,10 @@ var charges = null
 var shoot_cd = false
 
 
+
 func _ready() -> void:
 	current_health = max_health
-	draw_new_ship()
+	draw_new_ship(false)
 	can_fire = true
 	charges = max_charges
 	
@@ -92,7 +97,7 @@ func shoot_laser():
 		await get_tree().create_timer(recharge_cooldown).timeout
 		charges = max_charges
 		can_fire = true
-		draw_new_ship()
+		draw_new_ship(false)
 		ship.modulate = Color.WHITE
 		emit_signal("charge_changed", charges, max_charges)
 
@@ -102,7 +107,13 @@ func shotgun_blast() -> void:
 	var half = count / 2
 	for i in count:
 		var angle = rotation + (i - half) * (spread / count)
-		fire_laser()
+		var l = laser_scene.instantiate() as Laser
+		l.global_position = muzzle.global_position
+		l.rotation = angle
+		l.shape = shape
+		emit_signal("laser_shot", l)
+		Global.camera.shake(0.2, 3)
+	charges -= count
 
 func normal_shot() -> void:
 	fire_laser()
@@ -124,10 +135,14 @@ func fire_laser() -> void:
 	emit_signal("laser_shot", l)
 	Global.camera.shake(0.2, 3)
 	
-func draw_new_ship() -> void:
-	shape = ShapeBuilder.generate_random_shape(ship_size, ship)
+func draw_new_ship(use_current_shape: bool = true) -> void:
+	if use_current_shape:
+		shape = ShapeBuilder.resize_shape(ship_size, ship, shape)
+	else:
+		shape = ShapeBuilder.generate_random_shape(ship_size, ship)
 	var ship_indicator_size = ship_size / ship_indicator_scale
-	collision_polygon_2d.polygon = ship.polygon
+	collision_polygon_2d.set_deferred("polygon", ship.polygon)
+
 	match shape:
 		ShapeBuilder.Type.TRIANGLE:
 			rate_of_fire = 0.15
@@ -167,3 +182,14 @@ func _on_flash_timer_timeout() -> void:
 	else:
 		ship.modulate = Color.WHITE
 		flash_timer.stop()
+
+
+func _on_game_grow_ship() -> void:
+	if ship_size >= max_ship_size:
+		finale()
+	
+	ship_size += growth_step
+	draw_new_ship()
+	
+func finale() -> void:
+	win_game.emit()

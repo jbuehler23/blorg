@@ -13,6 +13,7 @@ var speed := 50.0
 @export var points: int = 0
 
 enum AsteroidSize {
+	BOSS,
 	LARGE,
 	MEDIUM,
 	SMALL
@@ -29,6 +30,10 @@ func _ready() -> void:
 	#0 -> square, 1-> triangle, 2-> circle
 	var shape_size = null
 	match asteroid_size:
+		AsteroidSize.BOSS:
+			speed = randf_range(250.0, 300.0)
+			shape_size = 150
+			points = 250
 		AsteroidSize.LARGE:
 			speed = randf_range(50.0, 100.0)
 			shape_size = randf_range(45.0, 60.0)
@@ -94,8 +99,11 @@ func _on_body_entered(body: Node2D) -> void:
 					AsteroidSize.SMALL:
 						body.charges += 1
 				body.charge_changed.emit(body.charges, body.max_charges)
+			queue_free()
 		else:
 			match asteroid_size:
+					AsteroidSize.BOSS:
+						body.damage(100)
 					AsteroidSize.LARGE:
 						body.damage(50)
 					AsteroidSize.MEDIUM:

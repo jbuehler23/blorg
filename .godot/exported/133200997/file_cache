@@ -1,6 +1,8 @@
-res://scenes/asteroids/asteroid.tscn::f8ab6a31baa63772e17295b04c0d1842::1744840955::res://.godot/exported/133200997/export-3d16b80044f31a13cb95ee11a584742c-asteroid.scn
-res://scenes/bosses/cone_head.tscn::592472be258b2a89cf33cd5f96edf0cb::1744840955::res://.godot/exported/133200997/export-5861cbdb43005882a9889604f90fe282-cone_head.scn
-res://scenes/laser/laser.tscn::d50b9d971dc49283ae98b53c306a8059::1744840955::res://.godot/exported/133200997/export-8528765920d39233f2c3998185101afb-laser.scn
-res://scenes/screens/game.tscn::f88d30623111a77e5f574f2b25059dea::1744840999::res://.godot/exported/133200997/export-93cfa7ec512a1c6eee23603a27001060-game.scn
-res://scenes/screens/hud.tscn::d12551ac7f992eab679461b076f08083::1744840955::res://.godot/exported/133200997/export-4f6dca68621d2da3af988a7c5c7ad816-hud.scn
-res://scenes/ships/player.tscn::f8052e307f2154594b43244dd41e9730::1744840955::res://.godot/exported/133200997/export-fea26c72f279250a825b3f3f9399fc2a-player.scn
+res://scenes/asteroids/asteroid.tscn::9a2c7b044655a8cad04ee9616551e512::1745100461::res://.godot/exported/133200997/export-3d16b80044f31a13cb95ee11a584742c-asteroid.scn
+res://scenes/bosses/cone_head.tscn::592472be258b2a89cf33cd5f96edf0cb::1745100461::res://.godot/exported/133200997/export-5861cbdb43005882a9889604f90fe282-cone_head.scn
+res://scenes/laser/laser.tscn::3a7054672e535474d66cfbee8d8153f8::1745100461::res://.godot/exported/133200997/export-8528765920d39233f2c3998185101afb-laser.scn
+res://scenes/screens/game.tscn::e6f01de87f613af038d5c0c9c9990417::1745100586::res://.godot/exported/133200997/export-93cfa7ec512a1c6eee23603a27001060-game.scn
+res://scenes/screens/hud.tscn::d12551ac7f992eab679461b076f08083::1745100461::res://.godot/exported/133200997/export-4f6dca68621d2da3af988a7c5c7ad816-hud.scn
+res://scenes/ships/player.tscn::f0f71bea038350aeeb627a5af39793c0::1745100461::res://.godot/exported/133200997/export-fea26c72f279250a825b3f3f9399fc2a-player.scn
+res://scenes/screens/Game_HUD.tscn::52e7e2c2d8b03c853bc15ddc61c2d7e8::1745100461::res://.godot/exported/133200997/export-d824c8649d7c4eae082756ec34bf919e-Game_HUD.scn
+res://scenes/screens/warning_overlay.tscn::4aa16da8d1513af3510b8d1a45b312a7::1745100461::res://.godot/exported/133200997/export-c7df0e31146f3145256e9a07f26ace62-warning_overlay.scn

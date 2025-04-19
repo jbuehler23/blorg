@@ -38,8 +38,3 @@ func _on_area_entered(area: Area2D) -> void:
 		var cone_head = area
 		cone_head.damage(10)
 		
-
-func _on_body_entered(body: Node2D) -> void:
-	if body is Ship:
-		var ship = body
-		ship.damage(10 * damage_multiplier)
