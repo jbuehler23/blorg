@@ -88,8 +88,7 @@ func explode() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is Ship:
 		if body.shape == shape:
-			hit_audio.pitch_scale = 1.0
-			hit_audio.play()
+			$AbsorbSFX.play()
 			##TODO: use a cooldown instead, seems to hard to restrict shooting entirely
 			if body.charges < body.max_charges:
 				print(str("increasing charges"))
@@ -99,10 +98,11 @@ func _on_body_entered(body: Node2D) -> void:
 						body.charges += 5
 					AsteroidSize.MEDIUM:
 						body.charges += 3
+						body.heal(15)
 					AsteroidSize.SMALL:
 						body.charges += 1
+						body.heal(5)
 				body.charge_changed.emit(body.charges, body.max_charges)
-			queue_free()
 		else:
 			match asteroid_size:
 					AsteroidSize.BOSS:
@@ -128,4 +128,8 @@ func start_sucking(target: Vector2) -> void:
 
 
 func _on_hit_audio_finished() -> void:
+	queue_free()
+
+
+func _on_absorb_sfx_finished() -> void:
 	queue_free()

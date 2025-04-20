@@ -161,6 +161,10 @@ func draw_new_ship(use_current_shape: bool = true) -> void:
 	right_indicator.color = Color.HOT_PINK
 	left_indicator.color = Color.HOT_PINK
 
+func heal(amount: float) -> void:
+	current_health += amount
+	take_damage.emit(current_health, max_health)
+
 func damage(amount: float) -> void:
 	current_health -= amount
 	take_damage.emit(current_health, max_health)
