@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://df0x0v6cnu5vv"]
+[gd_scene load_steps=5 format=3 uid="uid://df0x0v6cnu5vv"]
 
 [ext_resource type="Script" uid="uid://q5p7xnbvu742" path="res://scripts/ships/player.gd" id="1_tn02d"]
 [ext_resource type="PackedScene" uid="uid://d1su5kypdx6kv" path="res://scenes/screens/hud.tscn" id="2_p7acf"]
+[ext_resource type="AudioStream" uid="uid://dgw1a1qgp7sjd" path="res://assets/BEEPTimer_Anticipation Beeps_05.wav" id="3_lnsiw"]
+[ext_resource type="AudioStream" uid="uid://dhyedabj2drp4" path="res://assets/EXPLDsgn_Implode_15.wav" id="4_xsa8u"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -45,6 +47,15 @@ width = 5.0
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.1
 
+[node name="ReloadSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_lnsiw")
+pitch_scale = 0.51
+bus = &"SFX"
+
+[node name="DieSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_xsa8u")
+
 [connection signal="charge_changed" from="." to="Ship/HUD" method="_on_player_charge_changed"]
 [connection signal="take_damage" from="." to="Ship/HUD" method="_on_player_take_damage"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
+[connection signal="finished" from="DieSFX" to="." method="_on_die_sfx_finished"]

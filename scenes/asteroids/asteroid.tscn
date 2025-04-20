@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cimgh0dgo5fje"]
+[gd_scene load_steps=3 format=3 uid="uid://cimgh0dgo5fje"]
 
 [ext_resource type="Script" uid="uid://2qnue1rnw3gu" path="res://scripts/asteroids/asteroid.gd" id="1_n3rl4"]
+[ext_resource type="AudioStream" uid="uid://b01x7rhilirhi" path="res://assets/hitHurt.wav" id="2_nxpf8"]
 
 [node name="Asteroid" type="Area2D"]
 collision_layer = 4
@@ -13,4 +14,10 @@ self_modulate = Color(1.5, 1.5, 1.5, 1)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, 8, 64, 8, 64, 72, 0, 72)
 
+[node name="HitAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_nxpf8")
+pitch_scale = 0.5
+bus = &"SFX"
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="HitAudio" to="." method="_on_hit_audio_finished"]

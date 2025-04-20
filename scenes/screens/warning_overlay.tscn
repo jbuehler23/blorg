@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://buhm0e2j51ldf"]
+[gd_scene load_steps=6 format=3 uid="uid://buhm0e2j51ldf"]
 
 [ext_resource type="Script" uid="uid://hnttouse8812" path="res://scripts/ui/warning_overlay.gd" id="1_bx5hw"]
+[ext_resource type="AudioStream" uid="uid://cyupkbnr6hmvo" path="res://assets/BEEP_Targeting Loop_06.wav" id="2_ak147"]
 
 [sub_resource type="Animation" id="Animation_8qqdl"]
 resource_name = "flash"
@@ -60,5 +61,9 @@ libraries = {
 wait_time = 5.0
 one_shot = true
 
+[node name="WarningSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ak147")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="WarningFlashTimer" to="." method="_on_warning_flash_timer_timeout"]
+[connection signal="finished" from="WarningSFX" to="." method="_on_warning_sfx_finished"]

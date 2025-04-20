@@ -4,7 +4,7 @@ signal score_updated(score, boss_spawn_threshold)
 signal grow_ship()
 
 @onready var lasers: Node = $Lasers
-@onready var player: CharacterBody2D = $Player
+@onready var player: Ship = $Player
 @onready var asteroids: Node = $Asteroids
 @export var asteroid_child_size := 2
 @export var conehead_spawn_score := 100
@@ -31,13 +31,15 @@ var clearing_asteroids := false
 var boss_triggered := false
 
 @export var growth_threshold := 15
-
+var playthroughs := 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player.connect("laser_shot", _on_player_laser_shot)
 	warning_overlay.connect("warning_finished", _on_warning_finished_flashing)
-	
+	if playthroughs > 1:
+		player.ship_size = player.max_ship_size
+		player.max_ship_size *= 1.2
 	for asteroid in asteroids.get_children():
 		asteroid.connect("exploded", _on_asteroid_exploded)
 	randomize()
@@ -66,23 +68,34 @@ func _on_asteroid_exploded(pos, size, points):
 	
 	#$ExplodeSFX.pitch_scale = randf_range(0.5, 1.0)
 	$ExplodeSFX.play()
-	
+		
 	score += points
 	score_updated.emit(score, boss_threshold)
 	grow_ship.emit()
 	for i in range(asteroid_child_size):
 		match size:
 			Asteroid.AsteroidSize.BOSS:
+				$ExplodeSFX.pitch_scale = 0.5
+				$ExplodeSFX.volume_db = 10.0
+				$ExplodeSFX.play()
 				spawn_asteroid(pos, Asteroid.AsteroidSize.LARGE)
 				boss_triggered = false
 				infinite_asteroids = true
 				asteroid_spawn_timer.start()
 			Asteroid.AsteroidSize.LARGE:
+				$ExplodeSFX.pitch_scale = 0.7
+				$ExplodeSFX.volume_db = 7.0
+				$ExplodeSFX.play()
 				spawn_asteroid(pos, Asteroid.AsteroidSize.MEDIUM)
 			Asteroid.AsteroidSize.MEDIUM:
+				$ExplodeSFX.pitch_scale = 0.8
+				$ExplodeSFX.volume_db = 8.0
+				$ExplodeSFX.play()
 				spawn_asteroid(pos, Asteroid.AsteroidSize.SMALL)
 			Asteroid.AsteroidSize.SMALL:
-				pass
+				$ExplodeSFX.pitch_scale = 1.0
+				$ExplodeSFX.volume_db = 5.0
+				$ExplodeSFX.play()
 	
 	if score >= boss_threshold and not boss_triggered:
 		boss_triggered = true
@@ -143,6 +156,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == "fly_away":
 		clear_asteroids()
 		modulate = Color.BLACK
+		await get_tree().create_timer(5.8).timeout
+		playthroughs += 1
+		get_tree().call_deferred("reload_current_scene")
 
 func suck_asteroids() -> void:
 	for asteroid in asteroids.get_children():
@@ -175,6 +191,9 @@ func _on_cone_head_reset() -> void:
 
 func _on_player_win_game() -> void:
 	Global.camera.shake(10, 8)
+	$BackgroundMusic.pitch_scale = 5.0
+	$BackgroundMusic.play()
+	$ExplodeSFX.play()
 	clear_asteroids()
 	infinite_asteroids = false
 	asteroid_spawn_timer.stop()

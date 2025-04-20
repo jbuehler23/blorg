@@ -11,6 +11,7 @@ var speed := 50.0
 @onready var polygon_2d: Polygon2D = $Polygon2D
 @onready var collision_polygon_2d: CollisionPolygon2D = $CollisionPolygon2D
 @export var points: int = 0
+@onready var hit_audio: AudioStreamPlayer2D = $HitAudio
 
 enum AsteroidSize {
 	BOSS,
@@ -87,6 +88,8 @@ func explode() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is Ship:
 		if body.shape == shape:
+			hit_audio.pitch_scale = 1.0
+			hit_audio.play()
 			##TODO: use a cooldown instead, seems to hard to restrict shooting entirely
 			if body.charges < body.max_charges:
 				print(str("increasing charges"))
@@ -103,15 +106,26 @@ func _on_body_entered(body: Node2D) -> void:
 		else:
 			match asteroid_size:
 					AsteroidSize.BOSS:
+						hit_audio.pitch_scale = 0.5
+						hit_audio.play()
 						body.damage(100)
 					AsteroidSize.LARGE:
+						hit_audio.pitch_scale = 0.75
+						hit_audio.play()
 						body.damage(50)
 					AsteroidSize.MEDIUM:
+						hit_audio.pitch_scale = 0.90
+						hit_audio.play()
 						body.damage(30)
 					AsteroidSize.SMALL:
+						hit_audio.pitch_scale = 1.0
+						hit_audio.play()
 						body.damage(10)
-						
 func start_sucking(target: Vector2) -> void:
 	is_being_sucked = true
 	suck_target = target
 	
+
+
+func _on_hit_audio_finished() -> void:
+	queue_free()

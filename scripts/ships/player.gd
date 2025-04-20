@@ -94,6 +94,7 @@ func shoot_laser():
 	if charges <= 0:
 		can_fire = false
 		flash_timer.start()
+		$ReloadSFX.play()
 		await get_tree().create_timer(recharge_cooldown).timeout
 		charges = max_charges
 		can_fire = true
@@ -167,10 +168,10 @@ func damage(amount: float) -> void:
 		die()
 
 func die():
-	died.emit()
-	#ship.visible = false
-	#process_mode = Node.PROCESS_MODE_DISABLED
-	queue_free()
+	Global.camera.shake(4, 15)
+	$DieSFX.pitch_scale = 1.5
+	$DieSFX.play()
+
 
 
 func _on_flash_timer_timeout() -> void:
@@ -193,3 +194,10 @@ func _on_game_grow_ship() -> void:
 	
 func finale() -> void:
 	win_game.emit()
+
+
+func _on_die_sfx_finished() -> void:
+	died.emit()
+	#ship.visible = false
+	#process_mode = Node.PROCESS_MODE_DISABLED
+	queue_free()
