@@ -1,5 +1,5 @@
 fc8a56933c4b1c8d796fdb8f7a9f9475
-::res://::1745213732
+::res://::1745216005
 default_bus_layout.tres::AudioBusLayout::3840675393739945217::1745102525::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile/TextFile::-1::1745140184::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D/CompressedTexture2D::3052677577498064333::1744518705::1744607208::1::::<><><>0<>0<>101b928795bedeb9ad9190482a27b422<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
@@ -30,23 +30,24 @@ index.png::CompressedTexture2D/CompressedTexture2D::7212221175778805752::1745140
 ::res://linux/::1745140286
 ::res://macOS/::1745140280
 ::res://scenes/::1744718251
-::res://scenes/asteroids/::1745140168
-asteroid.tscn::PackedScene::5359502770063784858::1745140168::0::1::::<><><>0<>0<><>::uid://2qnue1rnw3gu::::res://scripts/asteroids/asteroid.gd<>uid://b01x7rhilirhi::::res://assets/hitHurt.wav<>uid://6le5pn0rhs0t::::res://assets/powerUp.wav
-::res://scenes/bosses/::1745140151
-cone_head.tscn::PackedScene::7818261774740189155::1745140151::0::1::::<><><>0<>0<><>::uid://d2cemhjq8358::::res://scripts/bosses/cone_head.gd<>uid://d1su5kypdx6kv::::res://scenes/screens/hud.tscn
-::res://scenes/laser/::1745140151
-laser.tscn::PackedScene::3414297428445225718::1745140151::0::1::::<><><>0<>0<><>::uid://d3olhyl6rbc6g::::res://scripts/laser/laser.gd
-::res://scenes/screens/::1745213141
-game.tscn::PackedScene::3762157615280790190::1745140151::0::1::::<><><>0<>0<><>::uid://c34hl32kw8c0g::::res://scripts/globals/game.gd<>uid://en68ktjhy0r::::res://scenes/screens/Game_HUD.tscn<>uid://cj2krpjorx8vx::::res://scripts/ui/camera_shake.gd<>uid://df0x0v6cnu5vv::::res://scenes/ships/player.tscn<>uid://buhm0e2j51ldf::::res://scenes/screens/warning_overlay.tscn<>uid://djnhvnk2mbswh::::res://scenes/bosses/cone_head.tscn<>uid://028e84voy6mk::::res://assets/JDSherbert - Ambiences Music Pack - Cosmic Star.wav<>uid://dwe1maiurcb12::::res://assets/LASRGun_Particle Compressor Fire_01.wav<>uid://hw2bjyw2b3ja::::res://assets/EXPLDsgn_Explosion Impact_14.wav
-Game_HUD.tscn::PackedScene::9103941127457643::1745140151::0::1::::<><><>0<>0<><>::uid://b06ug1rf6xwmf::::res://scripts/ui/game_hud.gd
-godot_wild_splash.tscn::PackedScene::2779210403828603204::1745213141::0::1::::<><><>0<>0<><>::uid://c0trahcbah303::::res://assets/80-Controlled Chaos.png<>uid://jyud6sihm26t::::res://assets/80-All-Cards.png
-hud.tscn::PackedScene::9022599261908985261::1745140151::0::1::::<><><>0<>0<><>::uid://biwb383vefovv::::res://scripts/ui/hud.gd
-warning_overlay.tscn::PackedScene::3805421701746150567::1745140151::0::1::::<><><>0<>0<><>::uid://hnttouse8812::::res://scripts/ui/warning_overlay.gd<>uid://cyupkbnr6hmvo::::res://assets/BEEP_Targeting Loop_06.wav
-::res://scenes/ships/::1745140151
-player.tscn::PackedScene::7563257999790565191::1745140151::0::1::::<><><>0<>0<><>::uid://q5p7xnbvu742::::res://scripts/ships/player.gd<>uid://d1su5kypdx6kv::::res://scenes/screens/hud.tscn<>uid://dgw1a1qgp7sjd::::res://assets/BEEPTimer_Anticipation Beeps_05.wav<>uid://dhyedabj2drp4::::res://assets/EXPLDsgn_Implode_15.wav
+::res://scenes/asteroids/::1745216148
+asteroid.tscn::PackedScene::5359502770063784858::1745216148::0::1::::<><><>0<>0<><>::uid://2qnue1rnw3gu::::res://scripts/asteroids/asteroid.gd<>uid://b01x7rhilirhi::::res://assets/hitHurt.wav<>uid://6le5pn0rhs0t::::res://assets/powerUp.wav
+::res://scenes/bosses/::1745216095
+cone_head.tscn::PackedScene::7818261774740189155::1745216095::0::1::::<><><>0<>0<><>::uid://d2cemhjq8358::::res://scripts/bosses/cone_head.gd<>uid://d1su5kypdx6kv::::res://scenes/screens/hud.tscn
+::res://scenes/laser/::1745216095
+laser.tscn::PackedScene::3414297428445225718::1745216095::0::1::::<><><>0<>0<><>::uid://d3olhyl6rbc6g::::res://scripts/laser/laser.gd
+::res://scenes/screens/::1745216108
+game.tscn::PackedScene::3762157615280790190::1745216095::0::1::::<><><>0<>0<><>::uid://c34hl32kw8c0g::::res://scripts/globals/game.gd<>uid://en68ktjhy0r::::res://scenes/screens/Game_HUD.tscn<>uid://cj2krpjorx8vx::::res://scripts/ui/camera_shake.gd<>uid://df0x0v6cnu5vv::::res://scenes/ships/player.tscn<>uid://buhm0e2j51ldf::::res://scenes/screens/warning_overlay.tscn<>uid://djnhvnk2mbswh::::res://scenes/bosses/cone_head.tscn<>uid://028e84voy6mk::::res://assets/JDSherbert - Ambiences Music Pack - Cosmic Star.wav<>uid://dwe1maiurcb12::::res://assets/LASRGun_Particle Compressor Fire_01.wav<>uid://hw2bjyw2b3ja::::res://assets/EXPLDsgn_Explosion Impact_14.wav
+Game_HUD.tscn::PackedScene::9103941127457643::1745216095::0::1::::<><><>0<>0<><>::uid://b06ug1rf6xwmf::::res://scripts/ui/game_hud.gd
+godot_wild_splash.tscn::PackedScene::2779210403828603204::1745216304::0::1::::<><><>0<>0<><>::uid://3w53bolti1x7::::res://scenes/screens/godot_wild_splash.gd<>uid://jyud6sihm26t::::res://assets/80-All-Cards.png
+hud.tscn::PackedScene::9022599261908985261::1745216095::0::1::::<><><>0<>0<><>::uid://biwb383vefovv::::res://scripts/ui/hud.gd
+godot_wild_splash.gd::GDScript::2012575519142690150::1745216093::0::1::::<>Control<><>0<>0<><>::
+warning_overlay.tscn::PackedScene::3805421701746150567::1745216095::0::1::::<><><>0<>0<><>::uid://hnttouse8812::::res://scripts/ui/warning_overlay.gd<>uid://cyupkbnr6hmvo::::res://assets/BEEP_Targeting Loop_06.wav
+::res://scenes/ships/::1745216095
+player.tscn::PackedScene::7563257999790565191::1745216095::0::1::::<><><>0<>0<><>::uid://q5p7xnbvu742::::res://scripts/ships/player.gd<>uid://d1su5kypdx6kv::::res://scenes/screens/hud.tscn<>uid://dgw1a1qgp7sjd::::res://assets/BEEPTimer_Anticipation Beeps_05.wav<>uid://dhyedabj2drp4::::res://assets/EXPLDsgn_Implode_15.wav
 ::res://scripts/::1744720417
-::res://scripts/asteroids/::1745140149
-asteroid.gd::GDScript::1928954110124879984::1745140149::0::1::::Asteroid<>Area2D<><>0<>0<><>::
+::res://scripts/asteroids/::1745216148
+asteroid.gd::GDScript::1928954110124879984::1745216148::0::1::::Asteroid<>Area2D<><>0<>0<><>::
 ::res://scripts/bosses/::1744868342
 cone_head.gd::GDScript/GDScript::266433948960326901::1744868342::0::1::::ConeHead<>Area2D<><>0<>0<><>::
 ::res://scripts/globals/::1745137925
