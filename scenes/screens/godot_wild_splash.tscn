@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfujgo3m4kq8c"]
+
+[ext_resource type="Script" uid="uid://3w53bolti1x7" path="res://scenes/screens/godot_wild_splash.gd" id="1_qmtxi"]
+[ext_resource type="Texture2D" uid="uid://jyud6sihm26t" path="res://assets/80-All-Cards.png" id="2_ty2xc"]
+
+[node name="GodotWildSplash" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qmtxi")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1960.0
+offset_bottom = 1120.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+
+[node name="Wildcards" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+texture = ExtResource("2_ty2xc")
+stretch_mode = 2

@@ -94,6 +94,10 @@ func _on_body_entered(body: Node2D) -> void:
 				print(str("increasing charges"))
 				body.can_fire = true
 				match asteroid_size:
+					AsteroidSize.BOSS:
+						hit_audio.pitch_scale = 0.5
+						hit_audio.play()
+						body.damage(100)
 					AsteroidSize.LARGE:
 						body.charges += 5
 					AsteroidSize.MEDIUM:
