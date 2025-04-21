@@ -90,10 +90,14 @@ func _on_body_entered(body: Node2D) -> void:
 		if body.shape == shape:
 			$AbsorbSFX.play()
 			##TODO: use a cooldown instead, seems to hard to restrict shooting entirely
-			if body.charges < body.max_charges:
+			if body.charges < body.max_charges or asteroid_size == AsteroidSize.BOSS:
 				print(str("increasing charges"))
 				body.can_fire = true
 				match asteroid_size:
+					AsteroidSize.BOSS:
+						hit_audio.pitch_scale = 0.5
+						hit_audio.play()
+						body.damage(500)
 					AsteroidSize.LARGE:
 						body.charges += 5
 					AsteroidSize.MEDIUM:
@@ -108,7 +112,7 @@ func _on_body_entered(body: Node2D) -> void:
 					AsteroidSize.BOSS:
 						hit_audio.pitch_scale = 0.5
 						hit_audio.play()
-						body.damage(100)
+						body.damage(500)
 					AsteroidSize.LARGE:
 						hit_audio.pitch_scale = 0.75
 						hit_audio.play()
